@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Kang Huihui — 精选案例：Sample 001~100 总览。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Jost:wght@300;400;500&family=Oswald:wght@600&family=Syne:wght@500;600;700;800&family=Noto+Sans+SC:wght@200;300;400;500;700&family=Geist+Pixel&display=swap"
+      rel="stylesheet"
+    />
+    <title>精选案例 — Kang Huihui 电商视觉设计</title>
+    <script type="module" crossorigin src="/assets/main-9976b68n.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/main-90a5ab67.css">
+  <link rel="stylesheet" href="/assets/qw-cursor.css" />
+</head>
+  <body>
+    <div id="root"></div>
+    <style>
+      /* 底部页签：未选中显示 01/02/03/04，选中或悬停时整条连滚上滑成范围文本（跑马灯式，无淡入淡出） */
+      .smp-group .pgw{display:inline-block;overflow:hidden;vertical-align:bottom;transition:none}
+      .smp-group .pgstrip{display:inline-flex;flex-direction:column;align-items:stretch;width:100%;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+      .smp-group .pgstrip>span{display:block;width:100%;text-align:center;white-space:nowrap}
+      .smp-group.is-on .pgstrip,.smp-group:hover .pgstrip{transform:translateY(var(--pgh))!important}
+    </style>
+    <script>
+      (function(){
+        var NUM=['01','02','03','all'];
+        var RANGES=['01 - 20','21 - 40','41 - 49','01 - 49'];
+        var bwList=[];
+        function build(btn,i){
+          if(btn.dataset.pg){btn._pgUpd&&btn._pgUpd();return}
+          var range=RANGES[i]||btn.textContent.trim();
+          var cs=getComputedStyle(btn);
+          var h=parseFloat(cs.lineHeight)||Math.round(parseFloat(cs.fontSize)*1.4);
+          var vpad=cs.paddingTop;
+          btn.dataset.pg='1';btn.textContent='';btn.style.setProperty('--pgh',-h+'px');
+          btn.style.boxSizing='border-box';btn.style.width='78px';btn.style.minWidth='78px';
+          btn.style.paddingLeft='0';btn.style.paddingRight='0';btn.style.paddingTop=vpad;btn.style.paddingBottom=cs.paddingBottom;
+          btn.style.textAlign='center';btn.style.overflow='visible';
+          var BOX=78-1; /* 减去 1px 下边框 */
+          var w=document.createElement('span');w.className='pgw';w.style.height=h+'px';w.style.width=BOX+'px';
+          var st=document.createElement('span');st.className='pgstrip';
+          var a=document.createElement('span');a.textContent=NUM[i]||range;
+          var b=document.createElement('span');b.textContent=range;
+          [a,b].forEach(function(x){x.style.height=h+'px';x.style.lineHeight=h+'px';st.appendChild(x)});
+          w.appendChild(st);btn.appendChild(w);
+          bwList.push({btn:btn});
+          var upd=function(){
+            var on=btn.classList.contains('is-on')||btn.matches(':hover');
+            st.style.transform=on?'translateY('+(-h)+'px)':'translateY(0)';
+          };
+          btn._pgUpd=upd;
+          btn.addEventListener('mouseenter',upd);btn.addEventListener('mouseleave',upd);
+          upd();
+        }
+        var scan=function(){
+          bwList=[];
+          var t=document.querySelectorAll('.smp-group');t.forEach(build);
+        };
+        new MutationObserver(function(){requestAnimationFrame(scan)}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+        scan();
+      })();
+    </script>
+  </body>
+</html>
+<!-- v:2026-02-14-samples-final -->
+<!-- v3 -->
+<!-- g2 -->
+<!-- v6 cache bump -->
+<!-- bump 15b -->
+<!-- r22b -->

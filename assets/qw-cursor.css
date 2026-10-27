@@ -1,0 +1,10 @@
+/* 全站用站点自己的准星光标（--cur-line 定义在主样式里：竖线 + 白芯，热点 10 19，兜底 text）
+   只在有精确指针的设备上生效；触屏不动。 */
+@media (hover: hover) and (pointer: fine) {
+  html:not(.no-crosshair), html:not(.no-crosshair) * { cursor: var(--cur-line); }
+  /* 输入框保留文本光标，方便编辑 */
+  html:not(.no-crosshair) input,
+  html:not(.no-crosshair) textarea { cursor: text; }
+  /* 引用主样式里已有的 cursor:none 规则会盖掉准星，这里抬一级 */
+  .mc-demo, .mc-demo * { cursor: var(--cur-line) !important; }
+}
